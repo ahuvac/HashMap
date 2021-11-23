@@ -18,12 +18,12 @@ public class OurHashMap<K,V> implements Map<K,V> {
 
     @Override
     public int size() {
-        return 0;
+        return SIZE;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return values == null;
     }
 
     @Override
@@ -93,15 +93,16 @@ public class OurHashMap<K,V> implements Map<K,V> {
         return null;
     }
 
-
-
-
     @Override
     public void putAll(Map m) {
-//        OurHashMap<K,V> map = (OurHashMap) m;
-//        for(List<Entry> entries : map.values){
-//            this.put(entries.get(0).key.hashCode(), entries)
-//        }
+        OurHashMap<K,V> map = (OurHashMap) m;
+            for (List<Entry> entries : map.values) {
+                if(entries != null) {
+                    for (Entry entry : entries) {
+                        this.put((K) entry.key, (V) entry.value);
+                    }
+                }
+            }
     }
 
     @Override
