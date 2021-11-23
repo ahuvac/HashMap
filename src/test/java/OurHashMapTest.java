@@ -1,17 +1,20 @@
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class OurHashMapTest {
+public class OurHashMapTest {
 
     @Test
-    void getNull() {
+    public void getNull() {
         // given
         OurHashMap<String,String> map = new OurHashMap<>();
         HashMap<String, String> map2 = new HashMap<>();
-        map2.remove('g');
+        map2.isEmpty();
 
         // when
 
@@ -20,7 +23,7 @@ class OurHashMapTest {
     }
 
     @Test
-    void put() {
+    public void put() {
         // given
         OurHashMap<String,String> map = new OurHashMap<>();
 
@@ -48,7 +51,7 @@ class OurHashMapTest {
     }
 
     @Test
-    void putSameKeys() {
+    public void putSameKeys() {
         // given
         OurHashMap<String,String> map = new OurHashMap<>();
 
@@ -64,7 +67,7 @@ class OurHashMapTest {
     }
 
     @Test
-    void remove(){
+    public void remove(){
         // given
         OurHashMap<String,String> map = new OurHashMap<>();
 
@@ -78,7 +81,7 @@ class OurHashMapTest {
     }
 
     @Test
-    void clear(){
+    public void clear(){
         // given
         OurHashMap<String,String> map = new OurHashMap<>();
 
@@ -92,7 +95,7 @@ class OurHashMapTest {
     }
 
     @Test
-    void putAll(){
+    public void putAll(){
         // given
         OurHashMap<String,String> map1 = new OurHashMap<>();
         OurHashMap<String,String> map2 = new OurHashMap<>();
@@ -107,6 +110,61 @@ class OurHashMapTest {
 
         //then
         assertEquals("HELLO", map2.get("ENGLISH1"));
-
     }
+
+    @Test
+    public void isEmpty_False(){
+        // given
+        OurHashMap<String,String> map = new OurHashMap<>();
+
+        // when
+        map.put("ENGLISH1", "HELLO");
+
+        //
+        assertFalse(map.isEmpty());
+    }
+
+    @Test
+    public void isEmpty_True(){
+        // given
+        OurHashMap<String,String> map = new OurHashMap<>();
+
+        // when
+         map.clear();
+
+        //
+        assertTrue(map.isEmpty());
+    }
+
+    @Test
+    public void keySet(){
+        OurHashMap<String,String> map = new OurHashMap<>();
+
+        // when
+        map.put("ENGLISH1", "HELLO");
+        map.put("SPANISH", "HOLA");
+        map.put("RUSSIAN", "PRIVIT");
+
+        Set keys = map.keySet();
+        //then
+        assertEquals(3, keys.size());
+        assertTrue(keys.contains("RUSSIAN"));
+    }
+
+
+    @Test
+    public void valueSet(){
+        OurHashMap<String,String> map = new OurHashMap<>();
+
+        // when
+        map.put("ENGLISH1", "HELLO");
+        map.put("SPANISH", "HOLA");
+        map.put("RUSSIAN", "PRIVIT");
+
+        Collection values = map.values();
+        //then
+        assertEquals(3, values.size());
+        assertTrue(values.contains("HELLO"));
+    }
+
 }
