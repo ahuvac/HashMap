@@ -18,7 +18,13 @@ public class OurHashMap<K,V> implements Map<K,V> {
 
     @Override
     public int size() {
-        return SIZE;
+        int size = 0;
+        for (List<Entry> entries : values) {
+            if (entries != null) {
+                size += entries.size();
+            }
+        }
+        return size;
     }
 
     @Override
@@ -28,11 +34,20 @@ public class OurHashMap<K,V> implements Map<K,V> {
 
     @Override
     public boolean containsKey(Object key) {
-        return false;
+        return this.get(key) != null;
     }
 
     @Override
     public boolean containsValue(Object value) {
+        for (List<Entry> entries : values) {
+            if (entries != null) {
+                for (Entry entry : entries) {
+                    if (entry.value.equals(value)) {
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
 
@@ -84,7 +99,7 @@ public class OurHashMap<K,V> implements Map<K,V> {
 
         if (list != null) {
             for (Entry entry : list) {
-                if (entry.key.hashCode() == hashcode) {
+                if (entry.key == key) {
                     list.remove(entry);
                     return (V) entry.value;
                 }
@@ -94,14 +109,10 @@ public class OurHashMap<K,V> implements Map<K,V> {
     }
 
     @Override
-    public void putAll(Map m) {
-        OurHashMap<K,V> map = (OurHashMap) m;
-            for (List<Entry> entries : map.values) {
-                if(entries != null) {
-                    for (Entry entry : entries) {
-                        this.put((K) entry.key, (V) entry.value);
-                    }
-                }
+    public void putAll(Map<? extends K, ? extends V> m) {
+            for (K key : m.keySet()) {
+                if (key != null)
+                    this.put(key, m.get(key));
             }
     }
 
@@ -112,15 +123,26 @@ public class OurHashMap<K,V> implements Map<K,V> {
 
     @Override
     public Set keySet() {
-        return null;
+        Set<K> keySet = new HashSet<>();
+        for (List<Entry> entries : values) {
+            if (entries != null){
+                for (Entry entry : entries) {
+                    keySet.add((K) entry.key);
+                }
+            }
+        }
+        return keySet;
     }
 
     @Override
     public Collection values() {
-        return null;
+        Collection<V> values = new HashSet<>();
+        for (Object key : this.keySet()) {
+            values.add((V) this.get(key));
+        }
+        return values;
     }
 
-    //dont need do
     @Override
     public Set<java.util.Map.Entry<K,V>> entrySet() {
         return null;
